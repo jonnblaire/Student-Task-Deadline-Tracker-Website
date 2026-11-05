@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Add Task · TaskFlow{% endblock %}
+{% block page_title %}Add New Task{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Add New Task</h1>
+    <p class="page-subtitle">Create a new academic task and keep your deadlines organized.</p>
+  </div>
+</div>
+
+<form method="POST" class="card card-pad form-card">
+  {% csrf_token %}
+  
+  <div class="form-grid">
+    <!-- Task Title -->
+    <div class="field full">
+      <label for="{{ form.title.id_for_label }}">Task Title <span class="req">*</span></label>
+      {{ form.title }}
+      {% if form.title.errors %}
+        <span style="color: var(--danger); font-size: 12px;">{{ form.title.errors.0 }}</span>
+      {% endif %}
+    </div>
+
+    <!-- Description -->
+    <div class="field full">
+      <label for="{{ form.description.id_for_label }}">Description</label>
+      {{ form.description }}
+      {% if form.description.errors %}
+        <span style="color: var(--danger); font-size: 12px;">{{ form.description.errors.0 }}</span>
+      {% endif %}
+    </div>
+
+    <!-- Subject -->
+    <div class="field">
+      <label for="{{ form.subject.id_for_label }}">Subject <span class="req">*</span></label>
+      {{ form.subject }}
+      {% if form.subject.errors %}
+        <span style="color: var(--danger); font-size: 12px;">{{ form.subject.errors.0 }}</span>
+      {% endif %}
+    </div>
+
+    <!-- Task Type -->
+    <div class="field">
+      <label for="{{ form.task_type.id_for_label }}">Task Type <span class="req">*</span></label>
+      {{ form.task_type }}
+      {% if form.task_type.errors %}
+        <span style="color: var(--danger); font-size: 12px;">{{ form.task_type.errors.0 }}</span>
+      {% endif %}
+    </div>
+
+    <!-- Priority -->
+    <div class="field">
+      <label for="{{ form.priority.id_for_label }}">Priority <span class="req">*</span></label>
+      {{ form.priority }}
+      {% if form.priority.errors %}
+        <span style="color: var(--danger); font-size: 12px;">{{ form.priority.errors.0 }}</span>
+      {% endif %}
+    </div>
+
+    <!-- Due Date -->
+    <div class="field">
+      <label for="{{ form.due_date.id_for_label }}">Due Date <span class="req">*</span></label>
+      {{ form.due_date }}
+      {% if form.due_date.errors %}
+        <span style="color: var(--danger); font-size: 12px;">{{ form.due_date.errors.0 }}</span>
+      {% endif %}
+    </div>
+
+    <!-- Status -->
+    <div class="field full">
+      <label for="{{ form.status.id_for_label }}">Status</label>
+      {{ form.status }}
+      {% if form.status.errors %}
+        <span style="color: var(--danger); font-size: 12px;">{{ form.status.errors.0 }}</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <a href="{% url 'my_tasks' %}" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn btn-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+      Save Task
+    </button>
+  </div>
+</form>
+{% endblock %}

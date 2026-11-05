@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit Task · TaskFlow{% endblock %}
+{% block page_title %}Edit Task{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Edit Task</h1>
+    <p class="page-subtitle">Update the details of your task below.</p>
+  </div>
+</div>
+
+<form method="POST" class="card card-pad form-card">
+  {% csrf_token %}
+  
+  <div class="form-grid">
+    <div class="field full">
+      <label>Task Title <span class="req">*</span></label>
+      <input type="text" name="title" class="form-control" value="{{ task.title }}" required>
+    </div>
+
+    <div class="field full">
+      <label>Description</label>
+      <textarea name="description" class="form-control" rows="4">{{ task.description }}</textarea>
+    </div>
+
+    <div class="field">
+      <label>Subject <span class="req">*</span></label>
+      <select name="subject" class="form-control" required>
+        <option value="">Select Subject</option>
+        {% for sub in subjects %}
+          <option value="{{ sub.id }}" {% if task.subject.id == sub.id %}selected{% endif %}>{{ sub.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Task Type <span class="req">*</span></label>
+      <select name="task_type" class="form-control" required>
+        <option value="assignment" {% if task.task_type == 'assignment' %}selected{% endif %}>Assignment</option>
+        <option value="project" {% if task.task_type == 'project' %}selected{% endif %}>Project</option>
+        <option value="quiz" {% if task.task_type == 'quiz' %}selected{% endif %}>Quiz</option>
+        <option value="examination" {% if task.task_type == 'examination' %}selected{% endif %}>Examination</option>
+        <option value="other" {% if task.task_type == 'other' %}selected{% endif %}>Other</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Priority <span class="req">*</span></label>
+      <select name="priority" class="form-control" required>
+        <option value="low" {% if task.priority == 'low' %}selected{% endif %}>Low</option>
+        <option value="medium" {% if task.priority == 'medium' %}selected{% endif %}>Medium</option>
+        <option value="high" {% if task.priority == 'high' %}selected{% endif %}>High</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Due Date <span class="req">*</span></label>
+      <input type="date" name="due_date" class="form-control" value="{{ task.due_date|date:'Y-m-d' }}" required>
+    </div>
+
+    <div class="field full">
+      <label>Status</label>
+      <select name="status" class="form-control">
+        <option value="pending" {% if task.status == 'pending' %}selected{% endif %}>Pending</option>
+        <option value="inprogress" {% if task.status == 'inprogress' %}selected{% endif %}>In Progress</option>
+        <option value="completed" {% if task.status == 'completed' %}selected{% endif %}>Completed</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <a href="{% url 'my_tasks' %}" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn btn-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+      Update Task
+    </button>
+  </div>
+</form>
+{% endblock %}

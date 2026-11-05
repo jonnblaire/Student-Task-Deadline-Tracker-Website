@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login · TaskFlow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+<div class="auth-body">
+  <div class="auth-brand">
+    <div class="auth-brand-logo">
+      <div class="logo-mark">T</div>
+      <div class="logo-text">Task<span>Flow</span></div>
+    </div>
+    <div class="auth-brand-body">
+      <div class="auth-brand-title">Stay on top of every deadline.</div>
+      <p class="auth-brand-text">TaskFlow helps college students track assignments, projects, quizzes, and exams — all in one clean, organized workspace.</p>
+    </div>
+    <div class="auth-brand-footer">© 2026 TaskFlow · Built for students</div>
+  </div>
+
+  <div class="auth-panel">
+    <div class="auth-card">
+      <div class="auth-logo-mobile">
+        <div class="logo-mark">T</div>
+        <div class="logo-text">Task<span>Flow</span></div>
+      </div>
+      <h1 class="auth-heading">Welcome back</h1>
+      <p class="auth-subheading">Log in to continue managing your academic tasks.</p>
+
+      <form method="POST" class="auth-form">
+        {% csrf_token %}
+        
+        <!-- ERROR MESSAGE KAPAG MALI ANG LOGIN -->
+        {% if form.errors %}
+          <div style="padding: 12px; background: var(--danger-bg); color: var(--danger); border-radius: 8px; font-size: 13px; margin-bottom: 10px;">
+            <strong>Invalid username or password.</strong> Please try again.
+          </div>
+        {% endif %}
+
+        <div class="field">
+          <label for="username">Username</label>
+          <input type="text" name="username" id="username" class="form-control" placeholder="Enter your username" required>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="pass-wrap">
+            <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required>
+            <button type="button" class="pass-toggle" onclick="togglePassword()" aria-label="Show password">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top:6px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          Login
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        Don't have an account? <a href="{% url 'register' %}">Create account</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function togglePassword() {
+    const input = document.getElementById('password');
+    input.type = input.type === 'password' ? 'text' : 'password';
+  }
+</script>
+</body>
+</html>
